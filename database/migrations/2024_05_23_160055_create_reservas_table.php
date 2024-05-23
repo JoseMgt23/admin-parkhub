@@ -13,18 +13,19 @@ class CreateReservasTable extends Migration
      */
     public function up()
     {
-        Schema::create('Reservas', function (Blueprint $table) {
+        Schema::create('reservas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre')->nullable();
             $table->string('apellido')->nullable();
             $table->string('email')->nullable();
-            $table->integer('telefono')->nullable();
+            $table->string('teléfono')->nullable();
             $table->date('fecha_reserva')->nullable();
             $table->timestamp('horario_entrada')->nullable();
             $table->timestamp('horario_salida')->nullable();
-            $table->integer('metodo_pago')->nullable();
+            $table->unsignedInteger('paymode_id')->nullable();
             $table->string('tipo_vehiculo')->nullable();
             $table->timestamps();
+            $table->foreign('paymode_id')->references('id')->on('paymodes')->onDelete('set null');
         });
     }
 
@@ -35,6 +36,6 @@ class CreateReservasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Reservas');
+        Schema::dropIfExists('reservas');
     }
 }
